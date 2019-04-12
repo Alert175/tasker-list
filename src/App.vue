@@ -26,5 +26,24 @@
     width: 50%;
     margin-left: 25%;
     text-decoration: none;
+    font-family: 'Fascinate Inline', cursive;
+    font-size: 2em;
+  }
+  a{
+    text-decoration: none;
+    color: #2b2b2b;
+    text-shadow: -5px 8px 6px #292929;
+  }
+  @media screen and (max-width:800px) {
+      #nav{
+        width: 80%;
+        margin-left: 10%;
+      }
+  }
+  @media screen and (max-width:500px) {
+      #nav{
+        width: 100%;
+        margin-left: 0%;
+      }
   }
 </style>
