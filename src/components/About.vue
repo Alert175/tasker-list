@@ -69,7 +69,8 @@ export default {
     transition: .5s;
   }
   .task-card:hover{
-    box-shadow: 10px 10px 10px #222222;
+    -webkit-box-shadow: 10px 10px 10px #222222;
+            box-shadow: 10px 10px 10px #222222;
     background: #edeaea;
   }
   .task-description{

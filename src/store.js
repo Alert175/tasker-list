@@ -18,8 +18,5 @@ export default new Vuex.Store({
     onloadTasks(state, newTasks){
       state.tasks = newTasks
     }
-  },
-  actions: {
-
   }
 })
