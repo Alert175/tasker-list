@@ -88,12 +88,14 @@ export default {
     cursor: pointer;
   }
   input{
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
     height: 5vh;
     border: none;
     text-align: center;
     font-size: 20px;
     font-family: 'Poiret One', cursive;
+    overflow: hidden;
   }
   span{
     width: 80%;

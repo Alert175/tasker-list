@@ -4,7 +4,9 @@
       <router-link to="/">Main</router-link>
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <transition name='fade' mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -32,7 +34,19 @@
   a{
     text-decoration: none;
     color: #2b2b2b;
-    /* text-shadow: -5px 8px 6px #292929; */
+    transition: .5s;
+  }
+  a:hover{
+    text-shadow: 5px 5px 5px #222222;
+  }
+  .fade-enter-active, .fade-leave-active {
+    -webkit-transition: 1s;
+    transition: 1s;
+  }
+  .fade-enter, .fade-leave-to {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    opacity: 0;
   }
   @media screen and (max-width:800px) {
       #nav{
