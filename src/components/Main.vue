@@ -3,8 +3,8 @@
     <h3 class="head">tasker</h3>
     <input type="text" class="addItem" v-model="item" v-on:keyup.enter="addListItem" placeholder="Какие задачи на сегодня?">
     <ul class="listTasks">
-      <li v-for="(task, id) in tasks" class="listItem" v-bind:class="{compliteTask: task.complite, listItem}">
-        <span type="checkbox" id="_check" v-on:click="completeTask(id, task.complite)">
+      <li v-for="(task, id) in tasks" class="listItem" v-bind:class="{compliteTask: task.complite, listItem:true}">
+        <span type="checkbox" id="_check" @click="completeTask(id, task.complite)">
           <i class="far fa-circle fa-1x" v-if="!task.complite"></i>
           <i class="fas fa-check fa-1x" v-if="task.complite"></i>
         </span>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import store from '../store'
 export default {
+  store,
   data(){
     return{
       item: '',
@@ -27,26 +29,35 @@ export default {
     }
   },
   methods:{
+    // добавляю обьект в массив -> вызываю мутацию, для перезаписи хранилища -> перезаписываю локальное хранилище
     addListItem: function(){
-          this.item == '' ? alert('Друг, укажи задачу :)') : this.tasks.push({description : this.item, complite: false});
-          this.item = '';
-          this.save();
+      if (this.item !== '') {
+        this.tasks.push({description : this.item, complite: false, fullDescription: '', show: false});
+        store.commit('onloadTasks', this.tasks);
+        this.item = '';
+        this.save();
+      } else {
+        alert('Друг, укажи задачу :)')
+      }
     },
+    // изменяю статус для таски выполнен/активна -> вызываю мутацию, для перезаписи хранилища
     completeTask: function(id, complite){
         this.tasks[id].complite = !complite;
+        store.commit('onloadTasks', this.tasks);
         this.save();
     },
+    // удаляю таску -> вызываю мутацию, для перезаписи хранилища
     deleteListItem: function(id){
         this.tasks.splice(id, 1);
+        store.commit('onloadTasks', this.tasks);
         this.save();
     },
     //сохраняю актуальный массив tasks в локальное хранилище в формате JSON
     save: function(){
       localStorage.clear();
-      // console.log(JSON.stringify(this.tasks));
       localStorage["tasks"] = JSON.stringify(this.tasks);
     },
-    //Получаю массив tasks в формате JSON если он есть
+    //Получаю массив tasks в формате JSON если он есть, также вызываю мутацию onloadTasks для перезаписи хранилища
     onload: function(){
       if (localStorage["tasks"] !== undefined) {
         this.tasks = JSON.parse(localStorage["tasks"]);
@@ -58,7 +69,8 @@ export default {
   },
   // при загрузке вызываю функцию
   beforeMount(){
-    this.onload()
+    this.onload();
+    store.commit('onloadTasks', this.tasks);
   }
 }
 </script>
