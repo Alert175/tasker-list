@@ -32,7 +32,7 @@
   a{
     text-decoration: none;
     color: #2b2b2b;
-    text-shadow: -5px 8px 6px #292929;
+    /* text-shadow: -5px 8px 6px #292929; */
   }
   @media screen and (max-width:800px) {
       #nav{

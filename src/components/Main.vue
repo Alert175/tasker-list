@@ -1,13 +1,9 @@
 <template lang="html">
   <div class="wrapper-main grid">
-    <transition name="saved" mode="in-out">
-      <button type="button" class="save" v-on:click="save">
-        <i class="fas fa-cloud fa-4x"></i>
-      </button>
-    </transition>
+    <h3 class="head">tasker</h3>
     <input type="text" class="addItem" v-model="item" v-on:keyup.enter="addListItem" placeholder="Какие задачи на сегодня?">
     <ul class="listTasks">
-      <li v-for="(task, id) in tasks" class="listItem" v-bind:class="{compliteTask: task.complite}">
+      <li v-for="(task, id) in tasks" class="listItem" v-bind:class="{compliteTask: task.complite, listItem}">
         <span type="checkbox" id="_check" v-on:click="completeTask(id, task.complite)">
           <i class="far fa-circle fa-1x" v-if="!task.complite"></i>
           <i class="fas fa-check fa-1x" v-if="task.complite"></i>
@@ -34,17 +30,20 @@ export default {
     addListItem: function(){
           this.item == '' ? alert('Друг, укажи задачу :)') : this.tasks.push({description : this.item, complite: false});
           this.item = '';
+          this.save();
     },
     completeTask: function(id, complite){
         this.tasks[id].complite = !complite;
+        this.save();
     },
     deleteListItem: function(id){
         this.tasks.splice(id, 1);
+        this.save();
     },
     //сохраняю актуальный массив tasks в локальное хранилище в формате JSON
     save: function(){
       localStorage.clear();
-      console.log(JSON.stringify(this.tasks));
+      // console.log(JSON.stringify(this.tasks));
       localStorage["tasks"] = JSON.stringify(this.tasks);
     },
     //Получаю массив tasks в формате JSON если он есть
