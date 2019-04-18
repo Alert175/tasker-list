@@ -3,7 +3,7 @@
     <div class="task-card grid" v-for="(task, id) in tasks">
       <h3 class="task-description" @click="show(id, task.show)" title="Показать/скрыть">{{task.description}}</h3>
       <input v-if="task.show" type="text" v-model="fullDescription" v-on:keyup.enter="addFullDescription(id)" placeholder="Подробное описание">
-      <span v-if="task.show">{{task.fullDescription}}</span>
+      <textarea v-if="task.show">{{task.fullDescription}}</textarea>
     </div>
   </div>
 </template>
@@ -20,7 +20,6 @@ export default {
   },
   methods:{
     show: function(id, show){
-      console.log(this.tasks[id].show);
       this.tasks[id].show = !show;
       store.commit('onloadTasks', this.tasks);
       this.save();
@@ -79,6 +78,7 @@ export default {
     margin: 0px;
     text-align: center;
     font-size: 35px;
+    vertical-align: center;
     font-family: 'Josefin Slab', 'Poiret One', cursive;
     -webkit-transition: .5s;
     transition: .5s;
@@ -97,21 +97,33 @@ export default {
     font-family: 'Poiret One', cursive;
     overflow: hidden;
   }
-  span{
-    width: 80%;
+  textarea{
+    width: 90%;
     height: 16vh;
-    margin-left: 10%;
+    margin-left: 5%;
     padding: 2vh 0;
     text-align: center;
     font-family: 'Caveat', cursive;
     font-size: 25px;
+    background: rgba(226, 221, 221, 0);
+    border: none;
   }
   @media screen and (max-width:800px) {
     .task-board{
       grid-template-columns: 1fr;
     }
+    .task-description{
+      font-size: 1.5em;
+    }
   }
   @media screen and (max-width:440px){
+    .task-board{
+      width: 80%;
+      margin-left: 10%;
+    }
+    .task-description{
+      font-size: 1.3em;
+    }
     input{
       font-size: 15px;
     }
